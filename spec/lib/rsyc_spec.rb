@@ -30,6 +30,8 @@ describe Rsyc::Config do
     subject.simple.should == "value"
     subject[:simple].should == "value"
     subject["simple"].should == "value"
+    subject.respond_to?(:simple).should be_true
+    subject.respond_to?("simple").should be_true
 
     -> { subject.missing }.should raise_error(NoMethodError)
     subject[:missing].should be_nil
@@ -43,6 +45,8 @@ describe Rsyc::Config do
     -> { subject.nested.missing }.should raise_error(NoMethodError)
     subject.nested[:missing].should be_nil
     subject.nested["missing"].should be_nil
+    subject.respond_to?(:missing).should be_false
+    subject.respond_to?("missing").should be_false
   end
 
 end

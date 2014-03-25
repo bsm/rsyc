@@ -32,7 +32,7 @@ module Rsyc
       key?(name.to_s) ? fetch(name) : super
     end
 
-    def respond_to_missing?(*)
+    def respond_to_missing?(name, *)
       key?(name.to_s) || super
     end
 
