@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = File.basename(__FILE__, '.gemspec')
   s.summary     = "Rsyc"
   s.description = "A simple YAML configuration builder and accessor"
-  s.version     = "0.1.0"
+  s.version     = "0.1.2"
 
   s.authors     = ["Black Square Media"]
   s.email       = "info@blacksquaremedia.com"
