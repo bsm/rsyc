@@ -5,48 +5,48 @@ describe Rsyc::Config do
   subject { described_class.new FIXTURE_PATH.join("app.yml"), "test" }
 
   it 'should load configuration' do
-    subject.should be_a(Rsyc::Options)
+    expect(subject).to be_a(Rsyc::Options)
   end
 
   it 'should fail when file is missing' do
-    -> {
+    expect {
       described_class.new FIXTURE_PATH.join("missing.yml"), "test"
-    }.should raise_error(ArgumentError)
+    }.to raise_error(ArgumentError)
   end
 
   it 'should fail when config is missing' do
-    -> {
+    expect {
       described_class.new FIXTURE_PATH.join("blank.yml"), "test"
-    }.should raise_error(ArgumentError)
+    }.to raise_error(ArgumentError)
   end
 
   it 'should fail when env is missing' do
-    -> {
+    expect {
       described_class.new FIXTURE_PATH.join("app.yml"), "missing"
-    }.should raise_error(ArgumentError)
+    }.to raise_error(ArgumentError)
   end
 
   it 'should have accessors' do
-    subject.simple.should == "value"
-    subject[:simple].should == "value"
-    subject["simple"].should == "value"
-    subject.respond_to?(:simple).should be_true
-    subject.respond_to?("simple").should be_true
+    expect(subject.simple).to eq("value")
+    expect(subject[:simple]).to eq("value")
+    expect(subject["simple"]).to eq("value")
+    expect(subject.respond_to?(:simple)).to be_truthy
+    expect(subject.respond_to?("simple")).to be_truthy
 
-    -> { subject.missing }.should raise_error(NoMethodError)
-    subject[:missing].should be_nil
-    subject["missing"].should be_nil
+    expect { subject.missing }.to raise_error(NoMethodError)
+    expect(subject[:missing]).to be_nil
+    expect(subject["missing"]).to be_nil
 
-    subject.nested.should == {"scope"=>"name", "url"=>"http://test.host.com/path?a=1"}
-    subject.nested.url.should == "http://test.host.com/path?a=1"
-    subject.nested[:url].should == "http://test.host.com/path?a=1"
-    subject.nested["url"].should == "http://test.host.com/path?a=1"
+    expect(subject.nested).to eq({"scope"=>"name", "url"=>"http://test.host.com/path?a=1"})
+    expect(subject.nested.url).to eq("http://test.host.com/path?a=1")
+    expect(subject.nested[:url]).to eq("http://test.host.com/path?a=1")
+    expect(subject.nested["url"]).to eq("http://test.host.com/path?a=1")
 
-    -> { subject.nested.missing }.should raise_error(NoMethodError)
-    subject.nested[:missing].should be_nil
-    subject.nested["missing"].should be_nil
-    subject.respond_to?(:missing).should be_false
-    subject.respond_to?("missing").should be_false
+    expect { subject.nested.missing }.to raise_error(NoMethodError)
+    expect(subject.nested[:missing]).to be_nil
+    expect(subject.nested["missing"]).to be_nil
+    expect(subject.respond_to?(:missing)).to be_falsey
+    expect(subject.respond_to?("missing")).to be_falsey
   end
 
 end
@@ -55,8 +55,8 @@ describe Rsyc::Options do
 
   subject { described_class.new some: "value", nested: { "status" => :ok } }
 
-  it { should be_a(Hash) }
-  it { should == {"some"=>"value", "nested"=>{"status"=>:ok}} }
+  it { is_expected.to be_a(Hash) }
+  it { is_expected.to eq({"some"=>"value", "nested"=>{"status"=>:ok}}) }
 
   its(:some)    { should == "value" }
   its(["some"]) { should == "value" }
